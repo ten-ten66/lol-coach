@@ -1,0 +1,67 @@
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Node
+node_modules/
+.next/
+out/
+*.log
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Docker / data
+pgdata/
+redisdata/
+
+# Coverage
+.coverage
+htmlcov/
+coverage.xml
+
+# OS
+Thumbs.db
+# --- secrets ---
+.env.*
+!.env.example
+# --- data / runtime ---
+*.db
+*.db-*
+*.sqlite*
+data/
+logs/
+output/
+*.pkl
+*.csv
+*.zip
+*.tar.gz
+# --- deps / build ---
+*.tsbuildinfo
+# --- tools / os ---
+.claude/
+.omc/
+*.bak
+*.bak_*
