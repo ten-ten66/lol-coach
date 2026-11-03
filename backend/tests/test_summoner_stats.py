@@ -66,7 +66,9 @@ def _match(match_id: str, me: Participant, *, duration: int = 1800) -> Match:
 def test_aggregate_basic() -> None:
     matches = [
         _match("M1", _participant(champion="Ahri", win=True, kills=5, deaths=2, assists=8, cs=180)),
-        _match("M2", _participant(champion="Ahri", win=False, kills=2, deaths=5, assists=3, cs=160)),
+        _match(
+            "M2", _participant(champion="Ahri", win=False, kills=2, deaths=5, assists=3, cs=160)
+        ),
         _match("M3", _participant(champion="Zed", win=True, kills=8, deaths=4, assists=2, cs=200)),
     ]
     result = _aggregate("Faker", "KR1", "P_ME", matches)

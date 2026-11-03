@@ -1,5 +1,7 @@
 # LoL Coach — League of Legends ドラフト支援ツール
 
+[![CI](https://github.com/ten-ten66/lol-coach/actions/workflows/ci.yml/badge.svg)](https://github.com/ten-ten66/lol-coach/actions/workflows/ci.yml)
+
 > 本プロジェクトは **Claude Code を用いたAI駆動開発** で設計・実装しました。
 
 Riot Games API から高ランク帯（Challenger / GM / Master）の試合を収集・集計し、ピック段階で「どのチャンピオンを選ぶと有利か」を勝率から提案する Web ツールです。

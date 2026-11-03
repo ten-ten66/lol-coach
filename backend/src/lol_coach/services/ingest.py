@@ -117,14 +117,8 @@ class MatchIngestService:
     async def _upsert_champions(self, champions: list[tuple[int, str]]) -> None:
         if not champions:
             return
-        rows = [
-            {"id": cid, "key": name, "name": name} for cid, name in {*champions}
-        ]
-        stmt = (
-            pg_insert(Champion)
-            .values(rows)
-            .on_conflict_do_nothing(index_elements=["id"])
-        )
+        rows = [{"id": cid, "key": name, "name": name} for cid, name in {*champions}]
+        stmt = pg_insert(Champion).values(rows).on_conflict_do_nothing(index_elements=["id"])
         await self._session.execute(stmt)
 
 

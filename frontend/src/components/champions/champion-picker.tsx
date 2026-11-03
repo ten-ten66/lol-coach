@@ -41,7 +41,7 @@ export function ChampionPicker({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center gap-2 border-b border-border p-3">
-          {/* eslint-disable-next-line jsx-a11y/no-autofocus */}
+          { }
           <Input
             autoFocus
             value={query}

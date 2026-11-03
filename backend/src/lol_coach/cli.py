@@ -53,7 +53,9 @@ QUEUE_LABELS = {
 @click.argument("riot_id")
 @click.option("--platform", default=None, help="Platform route (e.g. 'jp1'). Defaults to config.")
 @click.option("--count", default=20, show_default=True, type=int)
-@click.option("--queue", default=420, show_default=True, type=int, help="Queue ID (0 = all queues).")
+@click.option(
+    "--queue", default=420, show_default=True, type=int, help="Queue ID (0 = all queues)."
+)
 @click.option("--json", "as_json", is_flag=True, help="Output raw JSON instead of tables.")
 def stats(riot_id: str, platform: str | None, count: int, queue: int, as_json: bool) -> None:
     """Show recent match stats for RIOT_ID (format: 'Name#TAG')."""
@@ -85,9 +87,7 @@ def stats(riot_id: str, platform: str | None, count: int, queue: int, as_json: b
         raise SystemExit(1) from e
 
     if as_json:
-        click.echo(
-            json.dumps(_stats_to_dict(result), indent=2, ensure_ascii=False, default=str)
-        )
+        click.echo(json.dumps(_stats_to_dict(result), indent=2, ensure_ascii=False, default=str))
     else:
         _render_stats(console, result, plat, queue_filter)
 
@@ -128,14 +128,10 @@ def _stats_to_dict(s: SummonerStats) -> dict[str, object]:
     }
 
 
-def _render_stats(
-    console: Console, s: SummonerStats, platform: str, queue: int | None
-) -> None:
+def _render_stats(console: Console, s: SummonerStats, platform: str, queue: int | None) -> None:
     queue_label = QUEUE_LABELS.get(queue, str(queue)) if queue else "all queues"
     console.print()
-    console.print(
-        f"[bold cyan]{s.game_name}#{s.tag_line}[/bold cyan] [dim]({platform})[/dim]"
-    )
+    console.print(f"[bold cyan]{s.game_name}#{s.tag_line}[/bold cyan] [dim]({platform})[/dim]")
     if s.total_games == 0:
         console.print(f"[yellow]No matches found for queue {queue_label}.[/yellow]")
         return
@@ -206,10 +202,12 @@ def ingest_sample(
     settings = get_settings()
     plat = platform or settings.default_region
     console = Console()
-    console.print(
-        f"[bold]Sampling[/bold] {plat}: {players} players x {matches_per_player} matches"
+    console.print(f"[bold]Sampling[/bold] {plat}: {players} players x {matches_per_player} matches")
+    result = asyncio.run(
+        _run_sample(
+            settings.riot_api_key.get_secret_value(), plat, players, matches_per_player, concurrency
+        )
     )
-    result = asyncio.run(_run_sample(settings.riot_api_key.get_secret_value(), plat, players, matches_per_player, concurrency))
     console.print(
         f"[green]Done.[/green] players={result.players_sampled} seen={result.matches_seen} "
         f"ingested={result.matches_ingested}"
@@ -291,7 +289,9 @@ def draft(
     recs = asyncio.run(_run_draft(patch, tier_band, a_picks, e_picks, missing_role, top_n))
     console = Console()
     if not recs:
-        console.print("[yellow]No recommendations — aggregates may be empty for this patch.[/yellow]")
+        console.print(
+            "[yellow]No recommendations — aggregates may be empty for this patch.[/yellow]"
+        )
         return
     table = Table(title=f"Draft picks for {missing_role} (patch {patch}, {tier_band})")
     table.add_column("Champion", style="cyan")

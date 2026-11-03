@@ -70,7 +70,9 @@ async def sample_high_rank(
     ]
     if not all_entries:
         log.warning("sampler_no_entries", platform=platform)
-        return SamplingResult(platform=platform, players_sampled=0, matches_seen=0, matches_ingested=0)
+        return SamplingResult(
+            platform=platform, players_sampled=0, matches_seen=0, matches_ingested=0
+        )
 
     sample = random.sample(all_entries, k=min(n_players, len(all_entries)))
 

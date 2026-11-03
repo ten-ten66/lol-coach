@@ -67,9 +67,7 @@ class LeagueAPI:
         return League.model_validate(data)
 
     async def master(self, platform: str, queue: Queue = "RANKED_SOLO_5x5") -> League:
-        data = await self._client.get(
-            platform, f"/lol/league/v4/masterleagues/by-queue/{queue}"
-        )
+        data = await self._client.get(platform, f"/lol/league/v4/masterleagues/by-queue/{queue}")
         return League.model_validate(data)
 
     async def entries_by_puuid(self, platform: str, puuid: str) -> list[LeagueEntryFull]:
@@ -91,7 +89,5 @@ class SummonerAPI:
         return data
 
     async def by_puuid(self, platform: str, puuid: str) -> SummonerDTO:
-        data = await self._client.get(
-            platform, f"/lol/summoner/v4/summoners/by-puuid/{puuid}"
-        )
+        data = await self._client.get(platform, f"/lol/summoner/v4/summoners/by-puuid/{puuid}")
         return SummonerDTO.model_validate(data)

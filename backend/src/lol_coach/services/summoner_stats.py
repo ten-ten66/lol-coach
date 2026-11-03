@@ -92,15 +92,11 @@ class SummonerStatsService:
         match_ids = await self._match.ids_by_puuid(
             regional, account.puuid, count=count, queue=queue
         )
-        matches = await self._ingest.get_or_fetch_many(
-            regional, match_ids, concurrency=concurrency
-        )
+        matches = await self._ingest.get_or_fetch_many(regional, match_ids, concurrency=concurrency)
         return _aggregate(account.game_name, account.tag_line, account.puuid, matches)
 
 
-def _aggregate(
-    game_name: str, tag_line: str, puuid: str, matches: list[MatchRow]
-) -> SummonerStats:
+def _aggregate(game_name: str, tag_line: str, puuid: str, matches: list[MatchRow]) -> SummonerStats:
     summaries: list[MatchSummary] = []
     aggs: dict[str, ChampionAgg] = {}
     total_wins = 0

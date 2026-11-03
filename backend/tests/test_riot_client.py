@@ -47,9 +47,7 @@ async def test_get_401_raises_unauthorized(client: AsyncRiotClient) -> None:
 
 async def test_get_404_raises_not_found(client: AsyncRiotClient) -> None:
     with respx.mock() as mock:
-        mock.get("https://asia.api.riotgames.com/x").mock(
-            return_value=httpx.Response(404)
-        )
+        mock.get("https://asia.api.riotgames.com/x").mock(return_value=httpx.Response(404))
         with pytest.raises(NotFoundError):
             await client.get("asia", "/x")
 
@@ -69,9 +67,7 @@ async def test_get_500_retries_then_succeeds(client: AsyncRiotClient) -> None:
 async def test_get_500_exhausts_retries_raises_server_error(client: AsyncRiotClient) -> None:
     # max_retries=3, so 4 total attempts; mock all of them
     with respx.mock() as mock:
-        mock.get("https://jp1.api.riotgames.com/foo").mock(
-            return_value=httpx.Response(503)
-        )
+        mock.get("https://jp1.api.riotgames.com/foo").mock(return_value=httpx.Response(503))
         with pytest.raises(ServerError):
             await client.get("jp1", "/foo")
 

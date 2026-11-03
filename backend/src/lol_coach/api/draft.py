@@ -79,9 +79,7 @@ async def recommend_picks(req: DraftRequest, db: DbDep) -> DraftResponse:
 @router.get("/patches")
 async def draft_patches(db: DbDep) -> dict[str, list[str]]:
     """Patch / tier-band combos available in the aggregate tables (for UI dropdowns)."""
-    patches = list(
-        (await db.execute(select(ChampionMatchupAgg.patch).distinct())).scalars().all()
-    )
+    patches = list((await db.execute(select(ChampionMatchupAgg.patch).distinct())).scalars().all())
     bands = list(
         (await db.execute(select(ChampionMatchupAgg.tier_band).distinct())).scalars().all()
     )

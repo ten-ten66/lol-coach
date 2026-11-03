@@ -67,7 +67,7 @@ async def champion_stats(
         FROM participants p
         JOIN matches m ON p.match_id = m.match_id
         JOIN champions c ON c.id = p.champion_id
-        WHERE {' AND '.join(where)}
+        WHERE {" AND ".join(where)}
         GROUP BY p.champion_id, c.name
         HAVING count(*) >= :min_games
         """

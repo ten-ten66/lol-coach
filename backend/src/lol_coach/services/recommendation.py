@@ -70,9 +70,7 @@ async def recommend(
     picked_ids = {p.champion_id for p in (*allies, *enemies)}
 
     # All champions to evaluate
-    all_champ_rows = (
-        (await session.execute(select(Champion))).scalars().all()
-    )
+    all_champ_rows = (await session.execute(select(Champion))).scalars().all()
     candidates = [c for c in all_champ_rows if c.id not in picked_ids]
 
     # Pull matchups: candidate vs enemies in missing_role

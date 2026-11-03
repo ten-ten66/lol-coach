@@ -92,7 +92,9 @@ class AsyncRiotClient:
                 continue
             if isinstance(error, ServerError) and attempt <= self._max_retries:
                 backoff = min(2 ** (attempt - 1), 8)
-                log.warning("riot_server_error", url=url, attempt=attempt, status=response.status_code)
+                log.warning(
+                    "riot_server_error", url=url, attempt=attempt, status=response.status_code
+                )
                 await asyncio.sleep(backoff)
                 continue
             raise error

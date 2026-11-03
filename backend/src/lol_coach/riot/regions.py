@@ -36,8 +36,5 @@ def regional_for(platform: str) -> str:
     """Return the regional route for a platform; raises if unknown."""
     key = platform.lower()
     if key not in PLATFORM_TO_REGIONAL:
-        raise ValueError(
-            f"unknown platform '{platform}'. "
-            f"Known: {sorted(PLATFORM_TO_REGIONAL)}"
-        )
+        raise ValueError(f"unknown platform '{platform}'. Known: {sorted(PLATFORM_TO_REGIONAL)}")
     return PLATFORM_TO_REGIONAL[key]
